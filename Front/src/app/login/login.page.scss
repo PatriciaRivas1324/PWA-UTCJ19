@@ -1,0 +1,348 @@
+@use "sass:color";
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+/* Palette: Light, clean and professional */
+$bg-light: #f4f7f6;
+$white: #ffffff;
+$primary-blue: #009c68; // A professional blue
+$secondary-blue: #149e5d; // A brighter blue for accents
+$primary-blue-light: color.adjust($primary-blue, $lightness: 40%); // Para el fondo animado
+$text-color: #333;
+$light-gray: #e9ecef;
+$accent: rgba($secondary-blue, 0.15);
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Raleway, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Evita barras de scroll en pantalla completa */
+}
+
+/* Animación de fondo degradado para el contenedor principal */
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación de flotar mejorada (con rotación y escala) */
+@keyframes floatY {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  50% { transform: translateY(-25px) rotate(4deg) scale(1.05); } // Más movimiento
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Nueva animación para el logo que combina centrado y flotación */
+@keyframes floatYCentered {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50% { transform: translate(-50%, calc(-50% - 25px)) rotate(4deg) scale(1.05); }
+  100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+}
+
+/* Animación de brillo/pulso para el logo */
+@keyframes pulseGlow {
+  0% { 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 10px rgba($secondary-blue, 0.3); 
+  }
+  50% { 
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25), 0 0 35px rgba($secondary-blue, 0.7); 
+  }
+  100% { 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 10px rgba($secondary-blue, 0.3); 
+  }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw; /* Ocupa toda la pantalla */
+  height: 100vh; /* Ocupa toda la pantalla */
+  
+  /* Fondo degradado animado */
+  background: linear-gradient(-45deg, #eefdf8, $bg-light, #e0fcf5, $primary-blue-light);
+  background-size: 400% 400%;
+  animation: animatedGradient 25s ease infinite;
+}
+
+.screen {
+  background: $white;
+  position: relative;
+  box-shadow: 0 12px 36px rgba(20, 20, 20, 0.15); // Mantenemos la sombra para dar profundidad
+  
+  /* Layout de Grid de Escritorio a pantalla completa */
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mantenemos la división 50/50 */
+  align-items: stretch;
+  overflow: hidden; // Previene que las formas se salgan
+}
+
+.screen__content {
+  z-index: 2;
+  position: relative;
+  grid-column: 2 / 3;
+  padding: 40px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; // Centra el contenido verticalmente
+}
+
+.screen__background {
+  z-index: 1;
+  pointer-events: none;
+  position: relative;
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+  overflow: hidden; // Clave para que las formas no se salgan
+}
+
+.screen__background__shape {
+  position: absolute;
+  will-change: transform, opacity;
+}
+
+.screen__background__shape1 {
+  top: 0;
+  right: -40px;
+  height: 100%;
+  width: 62%;
+  background: linear-gradient(180deg, rgba($primary-blue,0.08), rgba($secondary-blue,0.03));
+  mix-blend-mode: overlay;
+  animation: floatY 10s ease-in-out infinite alternate; // Más lento y alterna
+}
+
+.screen__background__shape2 {
+  /* Círculo del Logo (Centrado en Columna Izquierda) */
+  background: linear-gradient(135deg, $primary-blue, $secondary-blue);
+  border-radius: 50%;
+  opacity: 0.95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  z-index: 3;
+  /* Usamos la nueva animación que centra y flota, junto con el pulso */
+  animation: floatYCentered 6s ease-in-out infinite, pulseGlow 3.5s ease-in-out infinite;
+  
+  top: 50%;
+  left: 50%;
+  width: 420px; // LOGO MÁS GRANDE
+  height: 420px; // LOGO MÁS GRANDE
+}
+
+.utcj-logo {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.2));
+  background-color: $white;
+  padding: 10px; // Un poco más de padding para que el logo respire
+  
+  /* Quitamos la animación de aquí, ya que ahora el contenedor se encarga de ella */
+  // animation: floatY 6s ease-in-out infinite;
+}
+
+.screen__background__shape3 {
+  height: 540px;
+  width: 190px;
+  background: linear-gradient(180deg, rgba($primary-blue,0.1), rgba($secondary-blue,0.05));
+  top: -10%;
+  right: -10px;
+  border-radius: 32px;
+  animation: floatY 9s ease-in-out infinite alternate-reverse; // Alterna reversa
+  display: block;
+}
+
+.screen__background__shape4 {
+  height: 420px;
+  width: 200px;
+  background: linear-gradient(90deg, rgba($primary-blue,0.05), rgba($secondary-blue,0.02));
+  top: 70%; // Ajuste de posición
+  right: 10%; // Ajuste de posición
+  border-radius: 60px;
+  animation: floatY 12s ease-in-out infinite alternate-reverse; // Más lento y en reversa
+  display: block;
+}
+
+/* Nueva forma para más "vida" */
+.screen__background__shape5 {
+  height: 150px;
+  width: 150px;
+  background: rgba($secondary-blue, 0.1);
+  top: 15%; // Posición ajustada
+  left: 5%; // Posición ajustada
+  border-radius: 60px;
+  animation: floatY 8s ease-in-out infinite;
+}
+
+/* Detalles verdes adicionales */
+.screen__background__shape6 {
+  position: absolute;
+  top: 40%;
+  left: -50px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba($primary-blue,0.07), rgba($secondary-blue,0.04));
+  animation: floatY 11s ease-in-out infinite alternate;
+}
+
+.screen__background__shape7 {
+  position: absolute;
+  bottom: -30px;
+  right: 10%;
+  width: 120px;
+  height: 280px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba($primary-blue,0.06), rgba($secondary-blue,0.03));
+  animation: floatY 13s ease-in-out infinite;
+  transform: rotate(20deg); // Un poco rotado
+}
+
+
+.login {
+  color: $text-color;
+  animation: fadeInUp .6s ease both;
+  width: 100%;
+  max-width: 420px; // Un ancho máximo para el form
+  padding: 40px 0;
+  margin: 0;
+}
+
+.login__field {
+  padding: 18px 0px;
+  position: relative;
+}
+
+.login__icon {
+  position: absolute;
+  top: 50%; /* Centra el ícono verticalmente */
+  left: 0;
+  transform: translateY(-50%); /* Ajuste fino para el centrado vertical */
+  color: $text-color; // Cambiado a negro/gris oscuro para mayor visibilidad
+  font-size: 1.2rem; // Un poco más grande
+}
+
+.login__input {
+  border: none;
+  border-bottom: 2px solid $light-gray;
+  background: transparent;
+  padding: 10px;
+  padding-left: 36px;
+  font-weight: 700;
+  color: $text-color;
+  transition: .25s;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.login__input::placeholder {
+  color: #a0aec0;
+  font-weight: 600;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+  outline: none;
+  border-bottom-color: $secondary-blue;
+  box-shadow: 0 8px 30px $accent;
+}
+
+.login__submit {
+  background: linear-gradient(90deg, $secondary-blue, $primary-blue);
+  font-size: 14px;
+  margin-top: 30px;
+  padding: 14px 22px;
+  border-radius: 28px;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; // Centra el texto
+  color: $white;
+  box-shadow: 0 10px 28px $accent, inset 0 -6px 18px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-size: 200% 100%;
+  width: 100%; // Botón de ancho completo
+  min-width: 220px;
+
+  /* Animación de brillo por defecto */
+  animation: shimmer 4s linear infinite;
+  transition: transform .18s ease, box-shadow .18s ease, animation-duration .3s ease;
+}
+
+.login__submit:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba($secondary-blue, 0.25), inset 0 -8px 18px rgba(0, 0, 0, 0.1);
+  /* Acelera la animación al pasar el mouse */
+  animation-duration: 1.6s;
+}
+
+.button__text {
+  margin-right: auto; // Empuja el ícono a la derecha
+  padding-left: 10px; // Espacio
+}
+
+.button__icon {
+  font-size: 20px;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.5);
+  padding-right: 10px; // Espacio
+}
+
+.social-login {
+  position: static;
+  margin-top: 40px;
+  text-align: center;
+  color: $text-color;
+  opacity: 0.8;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-login__icon {
+  padding: 16px 10px;
+  color: $primary-blue;
+  text-decoration: none;
+  text-shadow: 0 0 8px $accent;
+  transition: transform .28s ease, filter .28s ease;
+  font-size: 1.5rem;
+}
+
+.social-login__icon:hover {
+  transform: translateY(-6px) scale(1.06);
+  filter: drop-shadow(0 10px 18px $accent);
+}
+
+/* small accessibility tweak: focus visible */
+.login__input:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 4px;
+}

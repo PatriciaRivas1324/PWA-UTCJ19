@@ -1,0 +1,47 @@
+<!-- Contenido del componente de login -->
+<div class="container">
+      <div class="screen">
+        
+        <div class="screen__background">
+          <span class="screen__background__shape screen__background__shape4"></span>
+          <span class="screen__background__shape screen__background__shape3"></span>    
+          
+          <div class="screen__background__shape screen__background__shape2">
+            <!-- Ruta corregida para que Angular encuentre la imagen en la carpeta de assets -->
+            <!-- Esta es la ruta que proporcionaste, con un fallback por si falla -->
+            <img src="assets/img/logo-utcj.png" alt="Logo UTJ" class="utcj-logo" onerror="this.src='https://placehold.co/200x200/ffffff/009c68?text=LOGO'; this.onerror=null;">
+          </div>
+          
+          <span class="screen__background__shape screen__background__shape1"></span>
+          <!-- Añadí una forma extra para más dinamismo -->
+          <span class="screen__background__shape screen__background__shape5"></span>
+          <!-- Faltaban las formas 6 y 7 de tu código anterior, las he omitido según tu nuevo HTML -->
+        </div>    
+        
+        <div class="screen__content">
+          <form class="login">
+            <div class="login__field">
+              <!-- Reemplazado por ion-icon -->
+              <ion-icon name="person-outline" class="login__icon"></ion-icon>
+              <input type="text" class="login__input" placeholder="User name / Email">
+            </div>
+            <div class="login__field">
+              <!-- Reemplazado por ion-icon (usando el que pediste) -->
+              <ion-icon name="eye-off-outline" class="login__icon"></ion-icon>
+              <input type="password" class="login__input" placeholder="Password">
+            </div>
+            <button class="button login__submit" (click)="login()" type="button">
+              <span class="button__text">Log In Now</span>
+              <!-- Corregido para usar ion-icon, ya que Font Awesome no está cargado -->
+              <ion-icon name="chevron-forward-outline" class="button__icon"></ion-icon>
+            </button>        
+          </form>
+          <div class="social-login">
+            <div class="social-icons">
+                
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>

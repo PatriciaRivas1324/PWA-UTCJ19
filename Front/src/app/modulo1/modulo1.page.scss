@@ -1,0 +1,132 @@
+@use "sass:color";
+
+/* 1. Paleta de colores verdes (basada en tu SASS)
+*/
+$primary-green: #00875A;      // Un verde profesional y profundo
+$secondary-green: #2dd36f;    // Un verde brillante y moderno
+$bg-light-green: #f7fcf9;     // Fondo con tinte verde sutil
+$primary-green-light: color.adjust($primary-green, $lightness: 60%, $alpha: -0.7); // Tono claro para el fondo
+$secondary-green-light: color.adjust($secondary-green, $lightness: 30%, $alpha: -0.85); // Tono claro para las formas
+
+/* 2. Animaciones (extraídas de tu SASS)
+*/
+@keyframes animatedGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatY {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Estilos de la Barra de Navegación (Header)
+*/
+ion-toolbar[color="primary"] {
+  --background: $primary-green;
+  --color: white;
+}
+
+.user-chip {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  margin-left: 16px;
+}
+
+.user-avatar {
+  font-size: 2.2rem;
+  color: white;
+}
+
+/* 4. Estilos del Menú (Derecha)
+*/
+ion-menu {
+  ion-toolbar {
+    --background: #f4f4f4; // Un gris claro para el header/footer del menú
+  }
+
+  // Estilo para el ítem de menú activo
+  .menu-item-active {
+    --background: rgba($primary-green, 0.1);
+    --color: $primary-green;
+
+    ion-icon {
+      color: $primary-green;
+    }
+  }
+}
+
+/* 5. Estilos del Contenido (Aquí aplicamos las animaciones)
+*/
+ion-content {
+  // Aplicamos el fondo degradado animado
+  --background: linear-gradient(-45deg, $bg-light-green, $primary-green-light, $secondary-green-light);
+  background-size: 400% 400%;
+  animation: animatedGradient 25s ease infinite;
+  
+  // Necesario para posicionar las formas animadas
+  position: relative;
+  overflow: hidden;
+}
+
+// Contenedor para el contenido principal (texto, tarjetas, etc.)
+.content-wrapper {
+  position: relative; // Para que esté sobre las formas
+  z-index: 2;
+  padding: 16px;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+// Contenedor de las formas
+.background-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; // Detrás del contenido
+  pointer-events: none; // No interfiere con clics
+}
+
+// Formas animadas individuales (adaptadas de tu SASS)
+.shape {
+  position: absolute;
+  will-change: transform;
+  border-radius: 30%;
+  opacity: 0.8;
+  mix-blend-mode: multiply;
+}
+
+.shape1 {
+  height: 250px;
+  width: 250px;
+  background: $secondary-green-light;
+  top: 10%;
+  left: -50px;
+  animation: floatY 10s ease-in-out infinite alternate;
+}
+
+.shape2 {
+  height: 180px;
+  width: 180px;
+  background: $primary-green-light;
+  top: 40%;
+  right: -30px;
+  animation: floatY 12s ease-in-out infinite alternate-reverse;
+}
+
+.shape3 {
+  height: 120px;
+  width: 120px;
+  background: $secondary-green-light;
+  bottom: 15%;
+  left: 30%;
+  animation: floatY 9s ease-in-out infinite alternate;
+}
